@@ -55,7 +55,8 @@ struct NalUnit {
 struct AccessUnit {
     uint32_t rtp_timestamp = 0;
     MonoNs pts_ns = 0;                // presentation time, derived from rtp_timestamp
-    MonoNs capture_time_ns = 0;       // glass-to-glass origin, from injected SEI (see docs/WEEK4)
+    MonoNs capture_time_ns = 0;       // glass-to-glass origin, from injected SEI
+                                       // (see docs/NETWORK_TESTING_AND_LATENCY.md)
     bool is_idr = false;
     std::vector<NalUnit> nals;
 };

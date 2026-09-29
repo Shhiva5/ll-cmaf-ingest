@@ -80,7 +80,8 @@ public:
         }
     }
 
-    // Simple packet-loss/reorder counters for the latency report (Week 4).
+    // Simple packet-loss/reorder counters for the latency report; see
+    // docs/NETWORK_TESTING_AND_LATENCY.md.
     struct Stats {
         uint64_t packets_received = 0;
         uint64_t sequence_gaps = 0; // count of detected gaps (proxy for loss)

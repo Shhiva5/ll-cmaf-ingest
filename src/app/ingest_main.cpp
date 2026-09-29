@@ -6,7 +6,9 @@
 //   RtpReceiver) --> AccessUnitAssembler (groups NALs by RTP timestamp)
 //   --> JitterBuffer --> CmafMuxer --> HttpChunkedServer --> browser/ffplay
 //
-// Run `ll_cmaf_ingest --help` for CLI options. See docs for the
+// Run `ll_cmaf_ingest --help` for CLI options. See docs/RTP_DEPACKETIZATION.md,
+// docs/CMAF_MUXER.md, docs/LIVE_DELIVERY.md, and
+// docs/NETWORK_TESTING_AND_LATENCY.md for the
 // reasoning behind each stage and scripts/gen_test_stream.sh for how to
 // point a real ffmpeg encode at this program.
 
@@ -83,7 +85,7 @@ Args parse_args(int argc, char** argv) {
 // definition, all the NALs sharing one presentation timestamp; ffmpeg's RTP
 // sender emits them contiguously, so a simple "flush when the timestamp
 // changes" assembler is sufficient here (no B-frame reordering at the RTP
-// layer in our test configuration -- see docs/RTP_DEPACKETIZATION.md "Assumptions").
+// layer in our test configuration -- see docs/RTP_DEPACKETIZATION.md, "Assumptions").
 class AccessUnitAssembler {
 public:
     using AuCallback = std::function<void(AccessUnit)>;
@@ -180,7 +182,7 @@ int main(int argc, char** argv) {
     // keeping width/height at 0 in stsd -- most MSE-based LL-HLS/DASH
     // players ignore the sample entry's width/height and take the real
     // dimensions from the decoder, so this is a documented simplification
-    // (see docs/MUXER.md) rather than a correctness bug for playback.
+    // (see docs/CMAF_MUXER.md) rather than a correctness bug for playback.
     CmafMuxer muxer(CmafMuxerConfig{args.rtp_clock_hz, 1920, 1080});
     InitSegmentBuilder init_builder;
     HttpChunkedServer http(args.http_port);

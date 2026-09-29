@@ -4,11 +4,11 @@
 #
 # IMPORTANT: -x265-params bframes=0 is not incidental. The jitter buffer
 # reorders access units by presentation timestamp (see
-# src/jitter/jitter_buffer.hpp), which silently assumes decode order ==
+# src/jitter/jitter_buffer.hpp), which assumes decode order equals
 # presentation order -- true only when there are no B-frames. Removing this
-# flag reproduces the exact decode-order corruption bug documented in
-# docs/TESTING_LATENCY.md. Don't remove it unless you've also
-# implemented the ctts/DTS-tracking fix described there.
+# flag reproduces the decode-order defect documented in
+# docs/NETWORK_TESTING_AND_LATENCY.md. Do not remove it unless the
+# ctts/DTS-tracking fix described there has also been implemented.
 #
 # Usage:
 #   ./gen_test_stream.sh [rtp_port] [duration_seconds] [keyint]
